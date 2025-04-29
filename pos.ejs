@@ -1,0 +1,102 @@
+<!-- views/pos.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POS System</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="pos-container">
+    <header>
+      <h1>POS Terminal</h1>
+      <div class="user-info">
+        <span>Logged in as: <%= user.username %></span>
+        <a href="/" class="logout-btn">Logout</a>
+      </div>
+    </header>
+
+    <div class="pos-main">
+      <div class="products-panel">
+        <div class="category-filters">
+          <button class="category-btn active" data-category="all">All</button>
+          <button class="category-btn" data-category="Beverages">Beverages</button>
+          <button class="category-btn" data-category="Food">Food</button>
+          <button class="category-btn" data-category="Snacks">Snacks</button>
+        </div>
+
+        <div class="products-grid">
+          <% products.forEach(function(product) { %>
+            <div class="product-card" data-id="<%= product.id %>" data-category="<%= product.category %>">
+              <h3><%= product.name %></h3>
+              <p class="price">$<%= product.price.toFixed(2) %></p>
+              <button class="add-to-cart-btn">Add</button>
+            </div>
+          <% }); %>
+        </div>
+      </div>
+
+      <div class="cart-panel">
+        <h2>Current Order</h2>
+        <div class="cart-items">
+          <!-- Cart items will be added here via JavaScript -->
+          <div class="empty-cart-message">No items added</div>
+        </div>
+
+        <div class="cart-summary">
+          <div class="subtotal">
+            <span>Subtotal:</span>
+            <span class="subtotal-amount">$0.00</span>
+          </div>
+          <div class="tax">
+            <span>Tax (8%):</span>
+            <span class="tax-amount">$0.00</span>
+          </div>
+          <div class="total">
+            <span>Total:</span>
+            <span class="total-amount">$0.00</span>
+          </div>
+        </div>
+
+        <div class="payment-options">
+          <button class="payment-btn" data-method="cash">Cash</button>
+          <button class="payment-btn" data-method="card">Card</button>
+          <button class="payment-btn" data-method="promptpay">PromptPay</button>
+        </div>
+
+        <div class="cart-actions">
+          <button class="clear-cart-btn">Clear</button>
+          <button class="checkout-btn" disabled>Checkout</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal payment-modal" id="paymentModal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Complete Payment</h2>
+        <p>Total: <span class="modal-total">$0.00</span></p>
+        <div class="payment-method-details">
+          <!-- Payment details will be added here -->
+        </div>
+        <button class="process-payment-btn">Process Payment</button>
+      </div>
+    </div>
+
+    <div class="modal receipt-modal" id="receiptModal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Receipt</h2>
+        <div class="receipt-content">
+          <!-- Receipt will be added here -->
+        </div>
+        <button class="print-receipt-btn">Print</button>
+        <button class="new-order-btn">New Order</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/pos.js"></script>
+</body>
+</html>
